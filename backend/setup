@@ -1,0 +1,11 @@
+Using Visual Studio Code and the terminal
+
+terminal command: npm init -y
+
+terminal command: npm install express cors mongoose dotenv
+
+// auto restarts when changes detected
+terminal command: npm install -g nodemon
+
+// runs server
+terminal command: nodemon server
