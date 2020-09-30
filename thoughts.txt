@@ -1,0 +1,20 @@
+Since mongodb doesn't inheritently has some auto increment function
+we need to implement it outselves to track the IDs of the map, user,
+and groups.
+
+Problem 1: Heavy to constantly count the number of entries if it scales up
+Possible solution: Store ID pairing with the user?
+
+Problem 2: Similar issue, counting + constantly checking multiple tables
+Possible solution: Store the id itself and increment every time its used
+
+Problem 3: What to do when certain groups or maps become unowned?  AKA loses all owners or users
+Possible solution: Set an attribute that the owned/unowned status and clean up after it does
+            then store the freed up variables in a array to be used prior incrementing function
+
+________________
+
+- Just for the sake of the project we're going to assume that a small number of users
+will "use" it.  Otherwise we could attempt to modify the ID to account for larger values.
+
+- Store the markers directly in the Maps entry
