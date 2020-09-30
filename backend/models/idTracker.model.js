@@ -24,13 +24,13 @@ const userSchema = new Schema({
         trim: true
     },
 
-    freeGroup_id: {
+    freedGroupId: {
         type: Array,
         required: false,
         unique: true
     },
 
-    freeMap_id: {
+    freedMapId: {
         type: Array,
         required: false,
         unique: true
