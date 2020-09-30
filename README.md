@@ -4,4 +4,15 @@ Using https://www.youtube.com/watch?v=7CqJlxBYj-M as a guide to generate a CRUD 
 
 Idea is to generate maps that has markers where groups of people can collaborate regarding events that occur.
 
-Make sure to replace the API_KEY with your API key from google cloud services.
+Some resources:
+stack overflow - https://stackoverflow.com
+mongodb docs - docs.mongodb.com
+
+REQUIRED
+
+Replace the API_KEY with your API key from google cloud services for the frontend page.
+
+Setup a MongoDB atlas account and setup a .env in the backend folder for the server setup.
+
+It should look like
+ATLAS_URI=<INSERT API HERE>
