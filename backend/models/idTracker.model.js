@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+// the purpose of this file isn't necessarily to track data
+// but rather to use a roundabout method of tracking where we are
+// in terms of IDs, and to see what is and what is not in use
+
+const trackerSchema = new Schema({
     user_id: {
         type: Number,
         required: true,
@@ -40,6 +44,6 @@ const userSchema = new Schema({
     timestamps: true,
 });
 
-const idTracker = mongoose.model('idTracker', userSchema);
+const idTracker = mongoose.model('idTracker', trackerSchema);
 
 module.exports = User;
