@@ -20,6 +20,12 @@ const connection = mongoose.connection;
 connection.once('open', ()=> {
     console.log("MongoDB database connection established successfully");})
 
+// import
+const testRouter = require('./routes/test');
+
+// to use file
+app.use('/test', testRouter);
+
 app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);
 });
