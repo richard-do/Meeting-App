@@ -1,3 +1,6 @@
+- figure out the naming convention for mongodb... seems to be 
+differing opinions
+
 - set up page routing
 
 - setup a database using mongodb atlas
