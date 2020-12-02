@@ -2,11 +2,11 @@ import React from 'react';
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
 
-
 import Navbar from "./components/navbar.component";
 import Map from "./components/map.component";
-import CreateMarker from "./components/create-user.component";
-import CreateUser from "./components/create-user.component";
+import CreateMarker from "./components/create-marker.component";
+import EditMarker from "./components/edit-marker.component";
+// import CreateUser from "./components/create-user.component";
 
 // currently only accomodates one map (current)
 function App() {
@@ -14,9 +14,9 @@ function App() {
     <Router>
       <br/>
       <Route path="/" exact component={Map} />
-      <Route path="/edit/:id" component={EditMap} />
-      <Route path="/create" component={CreateMarker} />
-      <Route path="/user" component={CreateUser} />
+      <Route path="/edit/:id" component={EditMarker} />
+      <Route path="/createMarker" component={CreateMarker} />
+      {/*<Route path="/createUser" component={CreateUser} /> */}
     </Router>
   );
 }
