@@ -14,9 +14,9 @@ export default class Navbar extends Component {
                     <li>
                         <Link to="/createMarker" className="nav-link">Create Marker</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link to="/editMarker" className="nav-link">Edit Marker</Link>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
             </nav>

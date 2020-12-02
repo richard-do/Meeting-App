@@ -12,6 +12,7 @@ import EditMarker from "./components/edit-marker.component";
 function App() {
   return (
     <Router>
+      <Navbar/>
       <br/>
       <Route path="/" exact component={Map} />
       <Route path="/edit/:id" component={EditMarker} />
