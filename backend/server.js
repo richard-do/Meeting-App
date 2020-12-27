@@ -21,11 +21,11 @@ connection.once('open', ()=> {
     console.log("MongoDB database connection established successfully");})
 
 // import
-const userRouter = require('./routes/user');
+const markerRouter = require('./routes/marker');
 const mapRouter = require('./routes/map');
 
 // to use file
-app.use('/user', userRouter);
+app.use('/marker', markerRouter);
 app.use('/map', mapRouter);
 
 app.listen(port, ()=> {

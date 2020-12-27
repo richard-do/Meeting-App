@@ -134,7 +134,6 @@ export default class CreateMarker extends Component{
                         <input type="submit" value="Create Marker" className="btn btn-primary"/>
                     </div>
                 </form>
-
                 <p>In CreateMarker component.</p>
             </div>
         )
