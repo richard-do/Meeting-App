@@ -70,6 +70,9 @@ export default class CreateMarker extends Component{
             date: this.state.date
         }
 
+        axios.post('http://localhost:5000/marker/add', marker)
+            .then(result => console.log(result.data));
+
         // bring back to map after adding marker
         window.location = '/';
     }
@@ -134,6 +137,7 @@ export default class CreateMarker extends Component{
                         <input type="submit" value="Create Marker" className="btn btn-primary"/>
                     </div>
                 </form>
+
                 <p>In CreateMarker component.</p>
             </div>
         )
