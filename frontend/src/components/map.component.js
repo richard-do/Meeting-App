@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import axios from 'axios';
  
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
- 
+
 class Map extends Component {
   constructor (props){
     super(props);
     this.state = {
       markers: [],
-    }
+      markerList: []
+    };
   }
 
   static defaultProps = {
@@ -21,10 +23,26 @@ class Map extends Component {
 
   componentDidMount(){
     this.setState({
-      // will need to be able to make queries to db to handle this part
+      // testing multiple markers through componentDidMount()
       markers: [{lat: '43.5892', lng: '-79.6423', text: 'My Marker (Sq1)'},
                 {lat: '43.6000', lng: '-79.6423', text: 'My Marker (Test)'}]
     });
+  }
+
+  refresh(){
+    // this.setState({
+    //   markers: [],
+    // })
+
+    axios.get('http://localhost:5000/marker/')
+    .then(function (markers){
+      // log response
+      this.setState({markerList: markers.data})
+      //console.log(this.markerList)
+    })
+    .catch(function (error){
+      console.log(error);
+    })
   }
  
   render() {
@@ -59,6 +77,12 @@ class Map extends Component {
             text="My Marker (Testx)"
           /> */}
         </GoogleMapReact>
+
+        <div>
+        <button onClick={this.refresh}>
+        </button>
+        </div>
+
       </div>
     );
   }
