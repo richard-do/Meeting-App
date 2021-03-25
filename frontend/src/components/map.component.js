@@ -29,19 +29,20 @@ class Map extends Component {
     });
   }
 
-  refresh(){
+  getData(){
     // this.setState({
     //   markers: [],
     // })
 
     axios.get('http://localhost:5000/marker/')
-    .then(function (markers){
+    .then(res => {
       // log response
-      this.setState({markerList: markers.data})
-      //console.log(this.markerList)
+      console.log(res);
+      return res
     })
-    .catch(function (error){
-      console.log(error);
+    .catch(err => {
+      console.log(err);
+      return err
     })
   }
  
@@ -79,7 +80,8 @@ class Map extends Component {
         </GoogleMapReact>
 
         <div>
-        <button onClick={this.refresh}>
+        <p id="response">test</p>
+        <button onClick={this.getData}>Get Data
         </button>
         </div>
 
