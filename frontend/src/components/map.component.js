@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import axios from 'axios';
+import Geocode from "react-geocode";
  
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 class Map extends Component {
   constructor (props){
     super(props);
+    Geocode.setApiKey("yourkeyhere");
+
     this.state = {
       markers: [],
-      markerList: []
+      dbData: []
     };
   }
 
@@ -29,7 +32,7 @@ class Map extends Component {
     });
   }
 
-  getData(){
+  updateData(){
     // this.setState({
     //   markers: [],
     // })
@@ -37,13 +40,61 @@ class Map extends Component {
     axios.get('http://localhost:5000/marker/')
     .then(res => {
       // log response
-      console.log(res);
-      return res
+      //console.log(res);
+      //return res
+
+      //var data = res.data
+      //const eventArray = data.map(event => {event._id, event.address});
+      //console.log(data);
+
+      let data = res.data
+
+      console.log(data)
+
+      let parsedData = [];
+      let i;
+      let markText;
+      let obj;
+
+      for (i=0; i< data.length; i++){
+        obj = data[i];
+
+        // build onClick marker description
+        markText = "Event: " + obj.event + "\n"
+        +   "Address: " + obj.address + "\n"
+        +   "Date: " + obj.date + "\n"
+        +   "Time: " + obj.time + "\n"
+        +   "Description: " + obj.description;
+
+        let addrLat, addrLng;
+
+        // geocode address to generate address lat/long
+        Geocode.fromAddress(obj.address).then(
+          (response) => {
+            const {lat, lng} = response.results[0].geometry.location;
+            addrLat = lat;
+            addrLng = lng;
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+
+        // generate array of parsed markers
+        parsedData.push({_id: obj._id+"1", lat: addrLat, lng: addrLng, text: markText});
+      }
+
+      // this.setState ({
+      //   markers : parsedData
+      // })
+
+      //console.log(parsedData);
+
+      return data
     })
-    .catch(err => {
-      console.log(err);
-      return err
-    })
+    .catch(function(error){
+      console.log(error);
+    });
   }
  
   render() {
@@ -81,7 +132,7 @@ class Map extends Component {
 
         <div>
         <p id="response">test</p>
-        <button onClick={this.getData}>Get Data
+        <button onClick={this.updateData}>Get Data
         </button>
         </div>
 
