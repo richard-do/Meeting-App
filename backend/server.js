@@ -22,11 +22,11 @@ connection.once('open', ()=> {
 
 // import
 const markerRouter = require('./routes/marker');
-const mapRouter = require('./routes/map');
+//const mapRouter = require('./routes/map');
 
 // to use file
 app.use('/marker', markerRouter);
-app.use('/map', mapRouter);
+//app.use('/map', mapRouter);
 
 app.listen(port, ()=> {
     console.log(`Server is running on port: ${port}`);
