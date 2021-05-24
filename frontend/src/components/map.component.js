@@ -7,8 +7,11 @@ const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 class Map extends Component {
   constructor (props){
+
     super(props);
-    Geocode.setApiKey("yourkeyhere");
+    this.updateData = this.updateData.bind(this);
+    this.getCoordinate = this.getCoordinate.bind(this);
+    Geocode.setApiKey("xxx");
 
     this.state = {
       markers: [],
@@ -39,63 +42,59 @@ class Map extends Component {
 
     axios.get('http://localhost:5000/marker/')
     .then(res => {
-      // log response
-      //console.log(res);
-      //return res
 
-      //var data = res.data
-      //const eventArray = data.map(event => {event._id, event.address});
-      //console.log(data);
-
+      // grab unformatted event data from database
       let data = res.data
 
-      console.log(data)
+      let markers = [];
+      let markerText;
 
-      let parsedData = [];
-      let i;
-      let markText;
-      let obj;
-
-      for (i=0; i< data.length; i++){
-        obj = data[i];
+      // loop through events
+      for (let i=0; i< data.length; i++){
+        let obj = data[i];
 
         // build onClick marker description
-        markText = "Event: " + obj.event + "\n"
+        markerText = "Event: " + obj.event + "\n"
         +   "Address: " + obj.address + "\n"
         +   "Date: " + obj.date + "\n"
         +   "Time: " + obj.time + "\n"
         +   "Description: " + obj.description;
 
-        let addrLat, addrLng;
+        // gets the address using geocoder and pushes the
+        // completed marker into markers array
+        this.getCoordinate(obj.address)
+          .then(function(location){
+            markers.push({_id: obj._id+"1", lat: location.lat,
+            lng:location.lng, text: markerText});
+         });
+      }
 
+      // update markers with parsed data from database
+      this.setState ({markers});
+
+      return data
+    });
+  }
+
+  // gets the coordinates of an address using geocoder
+  async getCoordinate(address){
+        let result;
         // geocode address to generate address lat/long
-        Geocode.fromAddress(obj.address).then(
+        await Geocode.fromAddress(address).then(
           (response) => {
-            const {lat, lng} = response.results[0].geometry.location;
-            addrLat = lat;
-            addrLng = lng;
+            // attach the location to result
+            result = response.results[0].geometry.location;
           },
           (error) => {
             console.error(error);
           }
         );
 
-        // generate array of parsed markers
-        parsedData.push({_id: obj._id+"1", lat: addrLat, lng: addrLng, text: markText});
-      }
-
-      // this.setState ({
-      //   markers : parsedData
-      // })
-
-      //console.log(parsedData);
-
-      return data
-    })
-    .catch(function(error){
-      console.log(error);
-    });
+        // return the location resulting from geocoder
+        return result;
   }
+
+  
  
   render() {
     return (
