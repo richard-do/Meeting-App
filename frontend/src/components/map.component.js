@@ -14,8 +14,7 @@ class Map extends Component {
     Geocode.setApiKey("xxx");
 
     this.state = {
-      markers: [],
-      dbData: []
+      markers: []
     };
   }
 
@@ -36,9 +35,6 @@ class Map extends Component {
   }
 
   updateData(){
-    // this.setState({
-    //   markers: [],
-    // })
 
     axios.get('http://localhost:5000/marker/')
     .then(res => {
@@ -48,6 +44,7 @@ class Map extends Component {
 
       let markers = [];
       let markerText;
+      let locationData = [];
 
       // loop through events
       for (let i=0; i< data.length; i++){
@@ -60,13 +57,16 @@ class Map extends Component {
         +   "Time: " + obj.time + "\n"
         +   "Description: " + obj.description;
 
-        // gets the address using geocoder and pushes the
-        // completed marker into markers array
+        // gets the address using geocoder
         this.getCoordinate(obj.address)
           .then(function(location){
-            markers.push({_id: obj._id+"1", lat: location.lat,
-            lng:location.lng, text: markerText});
+            locationData = location;
          });
+
+      // push the completed marker into markers array
+      markers.push({_id: obj._id+"1", lat: locationData.lat,
+      lng:locationData.lng, text: markerText});
+
       }
 
       // update markers with parsed data from database
@@ -93,8 +93,6 @@ class Map extends Component {
         // return the location resulting from geocoder
         return result;
   }
-
-  
  
   render() {
     return (
@@ -116,17 +114,6 @@ class Map extends Component {
             )
           })}
 
-          {/* <AnyReactComponent
-            lat={43.5892}
-            lng={-79.6423}
-            text="My Marker (Mississauga)"
-          />
-
-          <AnyReactComponent
-            lat={43.6000}
-            lng={-79.6423}
-            text="My Marker (Testx)"
-          /> */}
         </GoogleMapReact>
 
         <div>
