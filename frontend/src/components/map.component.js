@@ -10,7 +10,6 @@ class Map extends Component {
 
     super(props);
     this.updateData = this.updateData.bind(this);
-    this.getCoordinate = this.getCoordinate.bind(this);
     Geocode.setApiKey("xxx");
 
     this.state = {
@@ -26,14 +25,6 @@ class Map extends Component {
     zoom: 11
   };
 
-  componentDidMount(){
-    this.setState({
-      // testing multiple markers through componentDidMount()
-      markers: [{lat: '43.5892', lng: '-79.6423', text: 'My Marker (Sq1)'},
-                {lat: '43.6000', lng: '-79.6423', text: 'My Marker (Test)'}]
-    });
-  }
-
   updateData(){
 
     axios.get('http://localhost:5000/marker/')
@@ -41,59 +32,38 @@ class Map extends Component {
 
       // grab unformatted event data from database
       let data = res.data
-
       let markers = [];
-      let markerText;
-      let locationData = [];
 
       // loop through events
       for (let i=0; i< data.length; i++){
         let obj = data[i];
 
-        // build onClick marker description
-        markerText = "Event: " + obj.event + "\n"
-        +   "Address: " + obj.address + "\n"
-        +   "Date: " + obj.date + "\n"
-        +   "Time: " + obj.time + "\n"
-        +   "Description: " + obj.description;
-
-        // gets the address using geocoder
-        this.getCoordinate(obj.address)
-          .then(function(location){
-            locationData = location;
-         });
-
-      // push the completed marker into markers array
-      markers.push({_id: obj._id+"1", lat: locationData.lat,
-      lng:locationData.lng, text: markerText});
-
-      }
-
-      // update markers with parsed data from database
-      this.setState ({markers});
-
-      return data
-    });
-  }
-
-  // gets the coordinates of an address using geocoder
-  async getCoordinate(address){
-        let result;
-        // geocode address to generate address lat/long
-        await Geocode.fromAddress(address).then(
+        // use geocoder to grab address associated with event
+        Geocode.fromAddress(obj.address).then(
           (response) => {
+            // build onClick marker description
+            let markerText = "Event: " + obj.event + "\n"
+            +   "Address: " + obj.address + "\n"
+            +   "Date: " + obj.date + "\n"
+            +   "Time: " + obj.time + "\n"
+            +   "Description: " + obj.description;
+
             // attach the location to result
-            result = response.results[0].geometry.location;
+            let result = response.results[0].geometry.location
+            markers.push({key: obj._id+"1", lat: result.lat,
+            lng:result.lng, text: markerText});
+
+            // render marker when updated
+            this.setState({markers});
           },
           (error) => {
             console.error(error);
           }
         );
-
-        // return the location resulting from geocoder
-        return result;
+      }
+    });
   }
- 
+
   render() {
     return (
       // Important! Always set the container height explicitly
@@ -107,6 +77,7 @@ class Map extends Component {
           {this.state.markers.map((marker, i) => {
             return(
               <AnyReactComponent
+                key = {marker.key}
                 lat = {marker.lat}
                 lng = {marker.lng}
                 text = {marker.text}
@@ -117,9 +88,8 @@ class Map extends Component {
         </GoogleMapReact>
 
         <div>
-        <p id="response">test</p>
-        <button onClick={this.updateData}>Get Data
-        </button>
+          <p id="response">test</p>
+          <button onClick={()=>this.updateData()}>Get Data</button>
         </div>
 
       </div>
