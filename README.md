@@ -1,6 +1,6 @@
 # CRUD App
 
-Using https://www.youtube.com/watch?v=7CqJlxBYj-M as a guideline to generate a CRUD application using MERN that utilizes google maps.  Currently I've utilized the format of the schema and forms.
+Using https://www.youtube.com/watch?v=7CqJlxBYj-M as a guideline to generate a CRUD application using MERN that utilizes google maps.  Currently I've used the format of the schema and forms.
 
 Idea is to generate maps that has markers where groups of people can collaborate regarding events that occur.  It will allow users to create events that will be placed on the map with the details involved.  This can be upscaled to allow for user functionality and to upload maps.  Possibly allow custom markers and/or handle placing markers in a better manner.
 

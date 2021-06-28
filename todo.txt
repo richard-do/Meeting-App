@@ -1,22 +1,3 @@
-- figure out the naming convention for mongodb... seems to be 
-differing opinions
+- add custom marker icons
 
-- set up page routing
-
-- setup a database using mongodb atlas
-
-- get database hooked up
-	- get it to store basic information at first
-		- utilize insomnia to test
-		- setup page to allow entering and storing of data
-	- setup login and registration (for later)
-		- salting passwords
-	- allow it to store map markers
-
-- implement a page that can load up a map
-	- figure out how to generate/store markers
-	- save said values
-
-- generate groups
-	- allow users to add, create, and remove members from groups
-	- can share a map of markers
+- implement delete and update
